@@ -1,0 +1,8 @@
+spring:
+    application:
+        name: zero-ai-alibaba
+    profiles:
+        active: dev
+server:
+    port: 8080
+

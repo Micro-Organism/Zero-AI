@@ -1,0 +1,12 @@
+spring:
+    ai:
+        dashscope:
+            api-key: ${AI_DASHSCOPE_API_KEY}
+            chat:
+                options:
+                    model: qwen-plus
+                    temperature: 0.7
+    application:
+        name: zero-ai-alibaba
+server:
+    port: 8080

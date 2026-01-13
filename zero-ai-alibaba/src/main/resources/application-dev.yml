@@ -1,0 +1,90 @@
+spring:
+    ai:
+        dashscope:
+            api-key: ${AI_DASHSCOPE_API_KEY}
+            chat:
+                options:
+                    model: qwen-plus
+                    temperature: 0.7
+        deepseek:
+            api-key: ${AI_DEEPSEEK_API_KEY}
+        # Graph 配置
+        graph:
+            checkpoint:
+                type: redis
+        # RAG 配置
+        vectorstore:
+            pgvector:
+                index-name: documents
+                dimensions: 1536
+    application:
+        name: zero-ai-alibaba
+    # Redis 配置（默认本地）
+    data:
+        redis:
+            host: 10.133.0.234
+            port: 10004
+            password: Gep@6379&redis
+            database: 10
+            timeout: 2000ms
+    # PostgreSQL 配置（默认本地，用于 PGvector）
+    datasource:
+        url: jdbc:highgo://10.133.0.234:10003/env_atmosphere?useUnicode=true&characterEncoding=utf8&currentSchema=public
+        username: highgo
+        password: Gep4Db&5866
+        driver-class-name: org.postgresql.Driver
+    # JPA 配置
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+# 可观测性配置
+management:
+    endpoints:
+        web:
+            exposure:
+                include: health,info,prometheus,metrics
+    tracing:
+        sampling:
+            probability: 1.0
+    zipkin:
+        tracing:
+            endpoint: http://localhost:9411/api/v2/spans
+server:
+    port: 8080
+
+# Dify配置
+dify:
+    api:
+        url: http://10.133.0.147:18082
+        tools:
+            app1:
+               name: "文本生成应用测试"
+               appid: "c46e6278-529e-4baf-9689-82e36f71ccfd"
+               key: ${DIFY_API_KEY:app-Li1IQ3aoUALUG9QafnY5xl5c}
+               description: "文本生成应用测试"
+            app2:
+               name: "面试官助手"
+               appid: "c41834f1-e70c-4c96-8722-eabbbffa1969"
+               key: ${DIFY_API_KEY:app-UfeIMKXQH4Zz2J84DnneAsdR}
+               description: "面试官助手"
+            app3:
+               name: "调研分析报告编写助手"
+               appid: "99a1cba2-8c35-472a-b98b-58f2ad261f3f"
+               key: ${DIFY_API_KEY:app-CnnfpV7PIkChjh033STaWOtp}
+               description: "调研分析报告编写助手"
+            app4:
+               name: "分析报告生成助手"
+               appid: "59cdfbd2-7826-4f34-83a6-cec16224bc57"
+               key: ${DIFY_API_KEY:app-0KfaUnJxjA4IVqsXVj1m0SZI}
+               description: "分析报告生成助手"
+            app5:
+               name: "测试知识库问答"
+               appid: "38f38794-bc62-49ab-b054-4669732e8ed0"
+               key: ${DIFY_API_KEY:app-3TM6x4lKsId9bnPUbKcLYBIM}
+               description: "测试知识库问答"
+        username: ${DIFY_USERNAME}
+        password: ${DIFY_PASSWORD}
