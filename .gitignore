@@ -25,3 +25,22 @@ replay_pid*
 .DS_Store
 .pnpm-store/
 .idea/
+.superpowers/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+
+# Local configuration and generated application data
+.env
+!.env.example
+zero-ai-interview/backend/data/
+zero-ai-interview/frontend/coverage/
