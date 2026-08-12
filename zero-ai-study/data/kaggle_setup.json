@@ -1,0 +1,11 @@
+{
+  "account": "coolrabbit1993",
+  "notebook_name": "zero-notebook",
+  "accelerator": "gpu_t4_x2",
+  "phone_verified": true,
+  "gpu_selected": true,
+  "secret_hf_token": true,
+  "confirmed_at": "2026-07-29T06:18:15.897916+00:00",
+  "recommended": "gpu_t4_x2",
+  "note": "已选推荐方案 T4 x2"
+}

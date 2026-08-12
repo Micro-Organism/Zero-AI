@@ -43,9 +43,7 @@ def create_matching(
     )
     db.add(project)
     db.flush()
-    requirements = list(
-        db.scalars(select(JobRequirement).where(JobRequirement.job_posting_id == job.id))
-    )
+    requirements = list(db.scalars(select(JobRequirement).where(JobRequirement.job_posting_id == job.id)))
     recalculate(db, project, requirements, version.snapshot)
     db.commit()
     db.refresh(project)
@@ -83,11 +81,7 @@ def get_matching(
 ):
     project = get_owned(db, MatchingProject, project_id, user.id)
     evidence = list(
-        db.scalars(
-            select(RequirementEvidence).where(
-                RequirementEvidence.matching_project_id == project.id
-            )
-        )
+        db.scalars(select(RequirementEvidence).where(RequirementEvidence.matching_project_id == project.id))
     )
     return {"project": project, "evidence": evidence}
 
@@ -101,9 +95,7 @@ def recalculate_matching(
     project = get_owned(db, MatchingProject, project_id, user.id)
     version = get_owned(db, ResumeVersion, project.resume_version_id, user.id)
     requirements = list(
-        db.scalars(
-            select(JobRequirement).where(JobRequirement.job_posting_id == project.job_posting_id)
-        )
+        db.scalars(select(JobRequirement).where(JobRequirement.job_posting_id == project.job_posting_id))
     )
     recalculate(db, project, requirements, version.snapshot)
     db.commit()

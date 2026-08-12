@@ -38,18 +38,14 @@ def verify_password(password: str, encoded: str) -> bool:
 def create_session_token(user_id: str) -> str:
     payload = {"sub": user_id, "exp": int(time.time()) + settings.session_ttl_seconds}
     payload_text = _b64encode(json.dumps(payload, separators=(",", ":")).encode())
-    signature = hmac.new(
-        settings.session_secret.encode(), payload_text.encode(), hashlib.sha256
-    ).digest()
+    signature = hmac.new(settings.session_secret.encode(), payload_text.encode(), hashlib.sha256).digest()
     return f"{payload_text}.{_b64encode(signature)}"
 
 
 def parse_session_token(token: str) -> str | None:
     try:
         payload_text, signature_text = token.split(".", 1)
-        expected = hmac.new(
-            settings.session_secret.encode(), payload_text.encode(), hashlib.sha256
-        ).digest()
+        expected = hmac.new(settings.session_secret.encode(), payload_text.encode(), hashlib.sha256).digest()
         if not hmac.compare_digest(expected, _b64decode(signature_text)):
             return None
         payload = json.loads(_b64decode(payload_text))

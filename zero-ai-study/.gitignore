@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Secrets & local env
+.env
+.env.local
+*.pem
+
+# Hugging Face / model caches (too large for git)
+.cache/
+huggingface/
+models/
+checkpoints/
+*.bin
+*.safetensors
+*.gguf
+*.ggml
+*.pt
+*.pth
+adapter_model.*
+
+# Training outputs
+outputs/
+runs/
+wandb/
+lightning_logs/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Keep placeholder dirs
+!outputs/.gitkeep
+!datasets/.gitkeep

@@ -1,0 +1,9 @@
+{"instruction": "用一句话解释什么是大模型微调。", "input": "", "output": "微调是在已经预训练好的大模型上，用你自己的小规模数据继续训练，让模型更适应特定任务或领域。"}
+{"instruction": "LoRA 和全量微调有什么主要区别？", "input": "", "output": "全量微调会更新模型几乎全部参数，显存和算力消耗大；LoRA 只训练少量低秩适配器参数，成本更低。"}
+{"instruction": "Alpaca 格式数据里三个字段分别是什么？", "input": "", "output": "instruction 是任务说明，input 是可选上下文，output 是期望回答。"}
+{"instruction": "为什么入门更推荐 LoRA / QLoRA？", "input": "", "output": "因为显存和算力有限时，只训练少量适配器参数就能显著降低成本，且更容易在免费 GPU 上跑通。"}
+{"instruction": "微调前后如何简单评估效果？", "input": "", "output": "准备几道固定测试题，对比微调前后回答是否更贴合目标任务，并观察训练 loss 是否下降。"}
+{"instruction": "Kaggle 上微调前要准备什么？", "input": "", "output": "手机验证、选择 GPU（推荐 T4 x2）、在 Secrets 配置 HF_TOKEN，并准备好 jsonl 数据。"}
+{"instruction": "instruction、input、output 分别是什么？", "input": "", "output": "instruction 是任务或问题，input 是可选上下文，output 是期望模型给出的回答。"}
+{"instruction": "求职时如何介绍一次微调实验？", "input": "", "output": "可以说清数据格式、训练方法（QLoRA）、算力（Kaggle T4）、产物（LoRA/GGUF）和前后对比结论。"}
+{"instruction": "用一句话说明什么是 QLoRA。", "input": "", "output": "QLoRA 是先把大模型 4bit 量化加载，再只训练 LoRA 适配器，从而在免费 GPU 上也能微调。"}

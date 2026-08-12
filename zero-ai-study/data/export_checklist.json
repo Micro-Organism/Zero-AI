@@ -1,0 +1,21 @@
+{
+  "confirmed_local_adapter": true,
+  "reloaded_adapter": true,
+  "ran_reload_infer": true,
+  "wrote_notes": true,
+  "skipped_gguf": true,
+  "did_gguf": false,
+  "did_ollama": false,
+  "base_model": "unsloth/Llama-3.1-8B-bnb-4bit",
+  "adapter_dir": "outputs/llama_lora_zh/",
+  "cloud_adapter_dir": "/kaggle/input/datasets/coolrabbit1993/llama-lora-zh/llama_lora_zh",
+  "load_summary": "Restart 后从 Dataset 重载：model_name=/kaggle/input/datasets/coolrabbit1993/llama-lora-zh/llama_lora_zh，device_map={'':0}，device=cuda:0。问「微调完成后常见产物有哪些？」→「instruction、LoRA、QLoRA。」（偏短、不完整，与 Step4 Q3 弱项一致）。",
+  "gguf_quant": "q4_k_m",
+  "gguf_path": "",
+  "ollama_cmd": "",
+  "issues": "Restart 清空 /kaggle/working；路径易写成 llama_lora_zh 横杠应为 llama-lora-zh；T4x2 需 device_map 与 inputs 对齐 device；二次 from_pretrained 易 OOM/meta。",
+  "note": "本轮跳过 GGUF。效果：能复现加载，但该题回答仍弱，需加数据后再训。",
+  "confirmed_at": "2026-07-29T10:36:10.005569+00:00",
+  "ok": true,
+  "validated_at": "2026-07-29T10:36:10.005569+00:00"
+}

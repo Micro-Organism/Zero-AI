@@ -1,0 +1,38 @@
+@use '../styles/variables.scss' as *;
+
+.eng-verdict {
+  p {
+    margin: 0 0 8px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.eng-code-block {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid $color-border;
+}
+
+.eng-code-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.eng-code {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #f3f7f5;
+  border: 1px solid $color-border;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  max-height: 320px;
+  overflow: auto;
+}

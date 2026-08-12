@@ -6,8 +6,6 @@ from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from career_workspace.core.config import settings
-from career_workspace.models.base import Base
-
 
 engine_kwargs: dict = {"future": True}
 if settings.database_url == "sqlite://":

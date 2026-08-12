@@ -1,6 +1,5 @@
 import hashlib
 from datetime import datetime, timezone
-from io import BytesIO
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, File, Query, UploadFile
@@ -125,9 +124,7 @@ def export_resume(
     user: User = Depends(get_current_user),
 ):
     version = db.scalar(
-        select(ResumeVersion).where(
-            ResumeVersion.id == version_id, ResumeVersion.user_id == user.id
-        )
+        select(ResumeVersion).where(ResumeVersion.id == version_id, ResumeVersion.user_id == user.id)
     )
     if not version:
         raise AppError(404, "not_found", "简历版本不存在")

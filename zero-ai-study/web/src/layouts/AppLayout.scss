@@ -1,0 +1,72 @@
+@use '../styles/variables.scss' as *;
+
+.study-layout {
+  background: transparent;
+}
+
+.study-sider {
+  background: rgba(255, 255, 255, 0.82) !important;
+  border-right: 1px solid $color-border;
+  backdrop-filter: blur(10px);
+
+  @media (max-width: $bp-md) {
+    display: none !important;
+  }
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 18px 12px;
+}
+
+.drawer-brand {
+  border-bottom: 1px solid $color-border;
+  margin-bottom: 8px;
+}
+
+.brand-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 700;
+  background: linear-gradient(145deg, $color-brand, #145a44);
+}
+
+.brand-name {
+  font-weight: 700;
+  color: $color-ink;
+}
+
+.brand-sub {
+  font-size: 12px;
+  color: $color-muted;
+}
+
+.study-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-inline: 16px !important;
+  border-bottom: 1px solid $color-border;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-title {
+  flex: 1;
+  font-weight: 600;
+}
+
+.menu-trigger {
+  display: none;
+
+  @media (max-width: $bp-md) {
+    display: inline-flex;
+  }
+}

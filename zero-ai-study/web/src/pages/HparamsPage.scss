@@ -1,0 +1,31 @@
+@use '../styles/variables.scss' as *;
+
+.hparams-page {
+  blockquote {
+    margin: 8px 0;
+    padding: 8px 12px;
+    border-left: 3px solid $color-brand;
+    background: #f3f7f5;
+    color: #333;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+}
+
+.hp-code-block {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid $color-border;
+}
+
+.hp-code {
+  margin: 8px 0 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #f3f7f5;
+  border: 1px solid $color-border;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}

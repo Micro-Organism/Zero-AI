@@ -1,3 +1,4 @@
+from copy import deepcopy
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, Query
@@ -19,11 +20,13 @@ from career_workspace.schemas.resume import (
     CareerProfileInput,
     ProjectExperienceInput,
     ProjectExperienceResponse,
+    ReferenceAnalyzeInput,
     ResumeCreate,
     ResumeResponse,
     ResumeUpdate,
     ResumeVersionCreate,
     ResumeVersionResponse,
+    SkillImportInput,
     SkillInput,
     SkillResponse,
     WorkExperienceInput,
@@ -31,6 +34,7 @@ from career_workspace.schemas.resume import (
 )
 from career_workspace.services.audit import record_audit
 from career_workspace.services.auth import get_current_user
+from career_workspace.services.reference_analysis import analyze_reference_resume
 
 router = APIRouter(tags=["resume"])
 
@@ -171,6 +175,7 @@ def list_resumes(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
     keyword: str = "",
+    kind: str = "",
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
@@ -179,10 +184,55 @@ def list_resumes(
         statement = statement.where(
             or_(Resume.title.ilike(f"%{keyword}%"), Resume.summary.ilike(f"%{keyword}%"))
         )
+    if kind:
+        statement = statement.where(Resume.kind == kind)
     statement = statement.order_by(Resume.updated_at.desc())
     total = db.scalar(select(func.count()).select_from(statement.subquery())) or 0
     items = list(db.scalars(statement.offset((page - 1) * page_size).limit(page_size)))
     return page_result(items, total, page, page_size)
+
+
+@router.post("/resumes/analyze")
+def analyze_reference_resume_route(
+    payload: ReferenceAnalyzeInput,
+    user: User = Depends(get_current_user),
+):
+    return analyze_reference_resume(payload.source_text, payload.title, payload.summary)
+
+
+@router.post("/resumes/{resume_id}/import-skills")
+def import_reference_skills(
+    resume_id: str,
+    payload: SkillImportInput,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    resume = owned(db, Resume, resume_id, user.id)
+    existing = {
+        item.name
+        for item in db.scalars(
+            select(Skill).where(Skill.user_id == user.id, Skill.deleted_at.is_(None))
+        )
+    }
+    created = []
+    skipped = []
+    for item in payload.skills:
+        if item.name in existing:
+            skipped.append(item.name)
+            continue
+        skill = Skill(
+            user_id=user.id,
+            name=item.name,
+            category=item.category,
+            level=3,
+            evidence=item.evidence or f"参考简历《{resume.title}》提取的技能点",
+        )
+        db.add(skill)
+        existing.add(item.name)
+        created.append(item.name)
+    record_audit(db, user, "import", "resumes", resume.id)
+    db.commit()
+    return {"created": created, "skipped": skipped}
 
 
 @router.get("/resumes/{resume_id}", response_model=ResumeResponse)
@@ -213,18 +263,67 @@ def update_resume(
     return resume
 
 
+@router.delete("/resumes/{resume_id}", status_code=204)
+def delete_resume(
+    resume_id: str,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    resume = owned(db, Resume, resume_id, user.id)
+    resume.deleted_at = datetime.now(timezone.utc)
+    record_audit(db, user, "soft_delete", "resumes", resume.id)
+    db.commit()
+
+
 def build_snapshot(db: Session, user: User, resume: Resume) -> dict:
     content = resume.content or {}
+    if resume.kind == "targeted" and isinstance(content.get("source_snapshot"), dict):
+        snapshot = deepcopy(content["source_snapshot"])
+        snapshot["resume"] = ResumeResponse.model_validate(resume).model_dump(mode="json")
+        snapshot["targeting"] = {
+            "job_title": content.get("job_title", ""),
+            "match_score": content.get("match_score"),
+            "evidence_sources": content.get("evidence_sources", []),
+        }
+        return snapshot
     work_ids = content.get("work_ids", [])
     project_ids = content.get("project_ids", [])
     skill_ids = content.get("skill_ids", [])
-    works = list(db.scalars(select(WorkExperience).where(WorkExperience.user_id == user.id, WorkExperience.id.in_(work_ids)))) if work_ids else []
-    projects = list(db.scalars(select(ProjectExperience).where(ProjectExperience.user_id == user.id, ProjectExperience.id.in_(project_ids)))) if project_ids else []
-    skills = list(db.scalars(select(Skill).where(Skill.user_id == user.id, Skill.id.in_(skill_ids)))) if skill_ids else []
+    works = (
+        list(
+            db.scalars(
+                select(WorkExperience).where(
+                    WorkExperience.user_id == user.id, WorkExperience.id.in_(work_ids)
+                )
+            )
+        )
+        if work_ids
+        else []
+    )
+    projects = (
+        list(
+            db.scalars(
+                select(ProjectExperience).where(
+                    ProjectExperience.user_id == user.id, ProjectExperience.id.in_(project_ids)
+                )
+            )
+        )
+        if project_ids
+        else []
+    )
+    skills = (
+        list(db.scalars(select(Skill).where(Skill.user_id == user.id, Skill.id.in_(skill_ids))))
+        if skill_ids
+        else []
+    )
     return {
         "resume": ResumeResponse.model_validate(resume).model_dump(mode="json"),
-        "work_experiences": [WorkExperienceResponse.model_validate(item).model_dump(mode="json") for item in works],
-        "project_experiences": [ProjectExperienceResponse.model_validate(item).model_dump(mode="json") for item in projects],
+        "work_experiences": [
+            WorkExperienceResponse.model_validate(item).model_dump(mode="json") for item in works
+        ],
+        "project_experiences": [
+            ProjectExperienceResponse.model_validate(item).model_dump(mode="json") for item in projects
+        ],
         "skills": [SkillResponse.model_validate(item).model_dump(mode="json") for item in skills],
         "skill_names": content.get("skill_names", []),
     }
@@ -238,7 +337,9 @@ def create_resume_version(
     user: User = Depends(get_current_user),
 ):
     resume = owned(db, Resume, resume_id, user.id)
-    latest = db.scalar(select(func.max(ResumeVersion.version_no)).where(ResumeVersion.resume_id == resume.id)) or 0
+    latest = (
+        db.scalar(select(func.max(ResumeVersion.version_no)).where(ResumeVersion.resume_id == resume.id)) or 0
+    )
     version = ResumeVersion(
         user_id=user.id,
         resume_id=resume.id,

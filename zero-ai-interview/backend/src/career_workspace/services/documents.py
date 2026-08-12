@@ -5,7 +5,6 @@ from pathlib import Path
 from docx import Document
 from pypdf import PdfReader
 
-
 TEXT_EXTENSIONS = {".txt", ".md", ".markdown", ".json"}
 DOCUMENT_EXTENSIONS = TEXT_EXTENSIONS | {".docx", ".pdf"}
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg"}

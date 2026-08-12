@@ -1,0 +1,22 @@
+@use '../styles/variables.scss' as *;
+
+.concepts-layout {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 1100px) {
+    grid-template-columns: 1.4fr 0.9fr;
+  }
+}
+
+.concept-bullets {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.7;
+  color: $color-ink;
+
+  li + li {
+    margin-top: 8px;
+  }
+}

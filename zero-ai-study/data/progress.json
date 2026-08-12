@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "updated_at": "2026-07-29T12:54:38.751839+00:00",
+  "steps": [
+    {
+      "id": "setup",
+      "title": "Step 0 · 环境与账号",
+      "dir": "00-setup",
+      "status": "done",
+      "note": "Token OK + Kaggle T4 x2"
+    },
+    {
+      "id": "concepts",
+      "title": "Step 1 · 概念",
+      "dir": "01-concepts",
+      "status": "done",
+      "note": "概念笔记已保存，必填项齐全"
+    },
+    {
+      "id": "data",
+      "title": "Step 2 · 数据",
+      "dir": "02-data",
+      "status": "done",
+      "note": "数据集已保存（9 条），达到入门数量要求"
+    },
+    {
+      "id": "finetune",
+      "title": "Step 3 · 微调",
+      "dir": "03-finetune",
+      "status": "done",
+      "note": "Step 3 已完成，进入导出"
+    },
+    {
+      "id": "eval",
+      "title": "Step 4 · 评估",
+      "dir": "04-eval",
+      "status": "done",
+      "note": "Step 4 已完成，进入导出"
+    },
+    {
+      "id": "export",
+      "title": "Step 5 · 导出与推理",
+      "dir": "05-export-infer",
+      "status": "done",
+      "note": "Step 5 已完成，进入进阶"
+    },
+    {
+      "id": "data_craft",
+      "title": "Step 6 · 数据工程深挖",
+      "dir": "06-data-craft",
+      "status": "done",
+      "note": "数据工程已校验：训练521 + Holdout100"
+    },
+    {
+      "id": "hparams",
+      "title": "Step 7 · 训练参数深挖",
+      "dir": "07-hparams",
+      "status": "done",
+      "note": "Step 7 参数深挖已完成"
+    },
+    {
+      "id": "retrain",
+      "title": "Step 8 · 再训与复评",
+      "dir": "08-retrain",
+      "status": "done",
+      "note": "Step 8 完成，进入工程验收"
+    },
+    {
+      "id": "engineering",
+      "title": "Step 9 · 工程验收 v3",
+      "dir": "09-engineering",
+      "status": "doing",
+      "note": "开始 Step 9 工程验收 v3"
+    }
+  ]
+}}

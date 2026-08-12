@@ -2,7 +2,6 @@ from fastapi import Cookie, Depends
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from career_workspace.core.config import settings
 from career_workspace.core.database import get_db
 from career_workspace.core.errors import AppError
 from career_workspace.core.security import parse_session_token

@@ -1,0 +1,166 @@
+@use '../styles/variables.scss' as *;
+
+.eval-page {
+  .page-desc {
+    margin-bottom: 0;
+  }
+}
+
+.ev-page-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.ev-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @media (min-width: 900px) {
+    flex-direction: row;
+    align-items: center;
+
+    .ant-steps {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+}
+
+.eval-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 1100px) {
+    grid-template-columns: minmax(0, 1.5fr) minmax(260px, 0.85fr);
+    align-items: start;
+  }
+}
+
+.ev-checks {
+  display: grid;
+  gap: 10px;
+}
+
+.ev-meta {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid $color-border;
+
+  @media (min-width: 720px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    > span {
+      font-size: 13px;
+      color: $color-muted;
+    }
+  }
+}
+
+.ev-code-block {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid $color-border;
+}
+
+.ev-code-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.ev-code {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #f3f7f5;
+  border: 1px solid $color-border;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.ev-q {
+  padding: 14px 0;
+  border-bottom: 1px solid $color-border;
+
+  &:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+.ev-q-title {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ev-q-cols {
+  display: grid;
+  gap: 10px;
+
+  @media (min-width: 800px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    > span {
+      font-size: 13px;
+      color: $color-muted;
+    }
+  }
+}
+
+.ev-summary {
+  display: grid;
+  gap: 12px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    > span {
+      font-size: 13px;
+      color: $color-muted;
+    }
+  }
+}
+
+.ev-steps {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.7;
+  color: $color-muted;
+}
+
+.ev-side {
+  .panel-card {
+    @media (min-width: 1100px) {
+      position: sticky;
+      top: 16px;
+    }
+  }
+}

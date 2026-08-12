@@ -7,9 +7,7 @@ def _build_match(auth_client):
         "/api/v1/resumes",
         json={"title": "主简历", "content": {"skill_names": ["Python", "FastAPI"]}},
     ).json()
-    version = auth_client.post(
-        f"/api/v1/resumes/{resume['id']}/versions", json={"note": "用于匹配"}
-    ).json()
+    version = auth_client.post(f"/api/v1/resumes/{resume['id']}/versions", json={"note": "用于匹配"}).json()
     job = auth_client.post(
         "/api/v1/job-postings",
         json={"title": "AI 工程师", "source_text": "必须熟练 Python；熟悉 RAG 优先。"},
@@ -28,9 +26,16 @@ def test_matching_is_explainable_and_generates_targeted_resume(auth_client):
     assert 0 <= created.json()["total_score"] <= 100
     assert created.json()["score_breakdown"]
 
-    targeted = auth_client.post(
-        f"/api/v1/matching-projects/{created.json()['id']}/targeted-resume"
-    )
+    targeted = auth_client.post(f"/api/v1/matching-projects/{created.json()['id']}/targeted-resume")
     assert targeted.status_code == 201
     assert targeted.json()["kind"] == "targeted"
     assert targeted.json()["source_matching_id"] == created.json()["id"]
+
+    targeted_version = auth_client.post(
+        f"/api/v1/resumes/{targeted.json()['id']}/versions",
+        json={"note": "岗位定制版"},
+    )
+    assert targeted_version.status_code == 201
+    snapshot = targeted_version.json()["snapshot"]
+    assert snapshot["resume"]["title"] == "AI 工程师 - 定制简历"
+    assert snapshot["skill_names"] == ["Python", "FastAPI"]

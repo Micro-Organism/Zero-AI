@@ -110,9 +110,7 @@ def list_jobs(
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    statement = select(JobPosting).where(
-        JobPosting.user_id == user.id, JobPosting.deleted_at.is_(None)
-    )
+    statement = select(JobPosting).where(JobPosting.user_id == user.id, JobPosting.deleted_at.is_(None))
     if keyword:
         statement = statement.where(
             or_(
@@ -186,9 +184,24 @@ def requirement_kind(sentence: str) -> str:
 
 def skill_name(sentence: str) -> str:
     known = [
-        "Python", "PyTorch", "TensorFlow", "RAG", "Agent", "Java", "Spring AI",
-        "LangChain4j", "Transformer", "Hugging Face", "LoRA", "SQL", "Docker",
-        "Kubernetes", "MCP", "多模态", "计算机视觉", "NLP",
+        "Python",
+        "PyTorch",
+        "TensorFlow",
+        "RAG",
+        "Agent",
+        "Java",
+        "Spring AI",
+        "LangChain4j",
+        "Transformer",
+        "Hugging Face",
+        "LoRA",
+        "SQL",
+        "Docker",
+        "Kubernetes",
+        "MCP",
+        "多模态",
+        "计算机视觉",
+        "NLP",
     ]
     matches = [item for item in known if item.lower() in sentence.lower()]
     return " / ".join(matches) if matches else sentence[:30].strip(" ：:")

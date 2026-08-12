@@ -1,0 +1,21 @@
+{
+  "read_guidelines": true,
+  "defined_task_scope": true,
+  "wrote_weak_spot_samples": true,
+  "built_holdout_eval": true,
+  "cleaned_and_validated": true,
+  "wrote_construction_notes": true,
+  "task_scope": "让模型用中文回答「大模型微调入门」相关问题：能讲清微调/LoRA/QLoRA、Alpaca 字段、训练产物、Prompt 与 SFT 区别、简单评估方法；面向求职作品集讲解，不追求百科全覆盖。",
+  "quality_rules": "1) 一条样本只教一个清晰点；\n2) output 必须可检验：列表题写全关键项，禁止只丢术语；\n3) 同一知识至少 2 种问法（防死记）；\n4) 针对 v1 弱项（产物清单、Prompt vs 微调、QLoRA 表述）优先补全；\n5) Holdout 措辞不得与训练集原句相同；\n6) 禁止空 output、明显错答、无意义重复。",
+  "train_path": "datasets/sample_alpaca_zh_v2.jsonl",
+  "eval_path": "datasets/eval_holdout_zh.jsonl",
+  "train_count": "521",
+  "eval_count": "100",
+  "weak_spots_covered": "v1 上「微调完成后常见产物」易答成术语堆砌；已在 v2 训练集增加产物/文件/归档清单类样本，并补强 Prompt vs SFT、QLoRA 的 Q 与 LoRA 拆解、Holdout 中放入改写后的同类题做泛化检查。",
+  "construction_notes": "1) 以 sample_alpaca_zh.jsonl 为种子复制到 sample_alpaca_zh_v2.jsonl；\n2) 按弱项扩写产物/对比/QLoRA 样本，并做同义改写；\n3) 另建 eval_holdout_zh.jsonl，题目换措辞，不进入训练；\n4) 用逐行 JSON 检查字段齐全、去空 output；\n5) 条数以 wc -l / 看板自动计数为准，训练目标 ≥30。",
+  "interview_talk": "我做的是中文微调入门问答。数据用 Alpaca 的 instruction/input/output；v1 只有约 9 条且产物题很弱，所以 v2 明确任务范围与质量规则，把训练集扩到 30+，并单独做 Holdout。构建时强调列表答案写全、同义改写、训测分离。下一步用这批数据加清晰超参再训 llama_lora_zh_v2，用弱题对比证明是否变好。",
+  "note": "以下文案为学习模板，请读懂后可按自己的话改一改再校验。",
+  "confirmed_at": "2026-07-29T11:04:55.939928+00:00",
+  "ok": true,
+  "validated_at": "2026-07-29T11:04:55.939928+00:00"
+}

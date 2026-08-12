@@ -10,7 +10,6 @@ from career_workspace.models.entities import (
     RequirementEvidence,
 )
 
-
 WEIGHTS = {
     "required": 5,
     "preferred": 2,
@@ -41,9 +40,7 @@ def recalculate(db: Session, project: MatchingProject, requirements: list[JobReq
     existing = {
         item.requirement_id: item
         for item in db.scalars(
-            select(RequirementEvidence).where(
-                RequirementEvidence.matching_project_id == project.id
-            )
+            select(RequirementEvidence).where(RequirementEvidence.matching_project_id == project.id)
         )
     }
     db.query(GapItem).filter(GapItem.matching_project_id == project.id).delete()

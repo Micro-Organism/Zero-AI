@@ -1,0 +1,24 @@
+# zero-ai-study — 本地笔记 / 轻量脚本依赖
+# 真正微调请在 Kaggle / Colab 按阶段 Notebook 安装 Unsloth（版本随平台 CUDA 变化）
+
+# 基础
+python-dotenv>=1.0.0
+jupyter>=1.0.0
+notebook>=7.0.0
+ipywidgets>=8.0.0
+
+# 数据与可视化（概念/数据阶段够用）
+pandas>=2.0.0
+datasets>=2.19.0
+
+# Hugging Face 登录与下载（本地或云端都常用）
+huggingface_hub>=0.23.0
+
+# 以下在「有 GPU 的云 Notebook」再装，避免本机无 CUDA 时强行装失败：
+# unsloth
+# torch
+# transformers
+# peft
+# trl
+# bitsandbytes
+# accelerate

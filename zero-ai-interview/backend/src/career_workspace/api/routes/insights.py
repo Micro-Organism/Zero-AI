@@ -13,15 +13,11 @@ router = APIRouter(tags=["insights"])
 
 @router.get("/insights/skills")
 def skill_insights(db: Session = Depends(get_db), user: User = Depends(get_current_user)):
-    requirements = list(
-        db.scalars(select(JobRequirement).where(JobRequirement.user_id == user.id))
-    )
+    requirements = list(db.scalars(select(JobRequirement).where(JobRequirement.user_id == user.id)))
     counter = Counter(item.skill or item.description[:30] for item in requirements)
     gaps = list(db.scalars(select(GapItem).where(GapItem.user_id == user.id, GapItem.status == "open")))
     return {
-        "skill_frequency": [
-            {"skill": skill, "count": count} for skill, count in counter.most_common(20)
-        ],
+        "skill_frequency": [{"skill": skill, "count": count} for skill, count in counter.most_common(20)],
         "open_gap_count": len(gaps),
         "recommendations": [
             "优先补齐重复出现的必备技能证据",

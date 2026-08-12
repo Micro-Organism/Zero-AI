@@ -38,6 +38,7 @@ __pycache__/
 # Node
 node_modules/
 dist/
+*.tsbuildinfo
 
 # Local configuration and generated application data
 .env

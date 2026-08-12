@@ -1,0 +1,26 @@
+@use '../styles/variables.scss' as *;
+
+.setup-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 960px) {
+    grid-template-columns: 1.2fr 1fr;
+  }
+}
+
+.activity-item {
+  .activity-title {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .activity-meta {
+    margin-top: 4px;
+    color: $color-muted;
+    font-size: 12px;
+  }
+}

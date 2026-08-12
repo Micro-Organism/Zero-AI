@@ -1,0 +1,25 @@
+{"ts": "2026-07-29T06:01:49.911111+00:00", "action": "token_saved", "ok": true, "message": "已保存 HF Token 到 .env（本地写入）", "meta": {"masked": "hf_nbMRc…zZxJ"}}
+{"ts": "2026-07-29T06:03:01.990082+00:00", "action": "token_tested", "ok": true, "message": "HF Token 测试通过：organism93", "meta": {"masked": "hf_nbMRc…zZxJ", "username": "organism93"}}
+{"ts": "2026-07-29T06:03:36.841423+00:00", "action": "token_tested", "ok": true, "message": "HF Token 测试通过：organism93", "meta": {"masked": "hf_nbMRc…zZxJ", "username": "organism93"}}
+{"ts": "2026-07-29T06:18:15.898344+00:00", "action": "kaggle_setup", "ok": true, "message": "Kaggle GPU 环境已确认", "meta": {"accelerator": "gpu_t4_x2", "account": "coolrabbit1993", "notebook": "zero-notebook"}}
+{"ts": "2026-07-29T06:33:42.159700+00:00", "action": "concepts_saved", "ok": true, "message": "概念笔记已保存，必填项齐全", "meta": {"filled": 5}}
+{"ts": "2026-07-29T06:43:35.795441+00:00", "action": "dataset_saved", "ok": true, "message": "数据集已保存（5 条），建议再补到 ≥8 条", "meta": {"count": 5, "complete": false}}
+{"ts": "2026-07-29T06:45:20.352898+00:00", "action": "dataset_saved", "ok": true, "message": "数据集已保存（9 条），达到入门数量要求", "meta": {"count": 9, "complete": true}}
+{"ts": "2026-07-29T06:45:20.391062+00:00", "action": "dataset_validated", "ok": true, "message": "数据集校验通过（9 条）", "meta": {"count": 9}}
+{"ts": "2026-07-29T07:11:23.832449+00:00", "action": "finetune_checklist", "ok": true, "message": "已保存清单（5/7），继续按前端步骤完成", "meta": {"done": 5, "run_all_ok": false}}
+{"ts": "2026-07-29T08:40:13.060205+00:00", "action": "finetune_validate", "ok": true, "message": "前半校验通过；后半未完成（1/5），缺：Kaggle Input 路径", "meta": {"phase_a_ok": true, "phase_b_ok": false, "a_done": 9, "b_done": 1, "validate": true}}
+{"ts": "2026-07-29T09:10:25.163329+00:00", "action": "finetune_validate", "ok": true, "message": "校验通过：Step 3 前半+后半均完成，已同步实验记录", "meta": {"phase_a_ok": true, "phase_b_ok": true, "a_done": 9, "b_done": 5, "validate": true}}
+{"ts": "2026-07-29T09:31:52.482086+00:00", "action": "eval_validate", "ok": false, "message": "校验未通过：总结：整体是否变好；总结：主要问题；总结：下一步打算", "meta": {"done": 1, "ok": false, "validate": true}}
+{"ts": "2026-07-29T09:35:04.025206+00:00", "action": "eval_validate", "ok": true, "message": "校验通过：Step 4 评估完成", "meta": {"done": 5, "ok": true, "validate": true}}
+{"ts": "2026-07-29T09:42:57.642090+00:00", "action": "export_validate", "ok": false, "message": "校验未通过：加载 / 推理摘要", "meta": {"done": 1, "ok": false, "validate": true, "local_adapter": true}}
+{"ts": "2026-07-29T09:44:36.018371+00:00", "action": "eval_validate", "ok": true, "message": "校验通过：Step 4 评估完成", "meta": {"done": 5, "ok": true, "validate": true}}
+{"ts": "2026-07-29T10:36:10.007150+00:00", "action": "export_validate", "ok": true, "message": "校验通过：Step 5 导出与推理完成", "meta": {"done": 4, "ok": true, "validate": true, "local_adapter": true}}
+{"ts": "2026-07-29T11:04:55.941874+00:00", "action": "data_craft_validate", "ok": true, "message": "校验通过：Step 6 数据工程完成", "meta": {"done": 6, "ok": true, "validate": true}}
+{"ts": "2026-07-29T11:12:36.598289+00:00", "action": "hparams_validate", "ok": true, "message": "校验通过：Step 7 训练参数完成", "meta": {"done": 6, "ok": true, "validate": true}}
+{"ts": "2026-07-29T12:06:44.189204+00:00", "action": "retrain_checklist", "ok": true, "message": "已保存进度（5/6）", "meta": {"done": 5, "ok": false, "validate": false}}
+{"ts": "2026-07-29T12:09:37.277412+00:00", "action": "retrain_validate", "ok": false, "message": "校验未通过：", "meta": {"done": 5, "ok": false, "validate": true}}
+{"ts": "2026-07-29T12:09:47.234241+00:00", "action": "retrain_validate", "ok": true, "message": "校验通过：Step 8 再训与复评完成", "meta": {"done": 6, "ok": true, "validate": true}}
+{"ts": "2026-07-29T12:14:35.008692+00:00", "action": "retrain_checklist", "ok": true, "message": "校验通过：Step 8 再训与复评完成", "meta": {"done": 6, "ok": true, "validate": false}}
+{"ts": "2026-07-29T12:22:44.811991+00:00", "action": "engineering_checklist", "ok": true, "message": "已保存进度（2/9）", "meta": {"done": 2, "ok": false, "validate": false}}
+{"ts": "2026-07-29T12:52:45.911671+00:00", "action": "engineering_checklist", "ok": true, "message": "已保存进度（6/9）", "meta": {"done": 6, "ok": false, "validate": false}}
+{"ts": "2026-07-29T12:53:37.024812+00:00", "action": "engineering_checklist", "ok": true, "message": "已保存进度（6/9）", "meta": {"done": 6, "ok": false, "validate": false}}

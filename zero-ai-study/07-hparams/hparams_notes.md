@@ -1,0 +1,51 @@
+# 训练参数笔记
+
+> 本文件由前端「训练参数」页保存时自动同步。
+
+## v2 计划配置
+
+- lora r：16
+- lora_alpha：16
+- learning_rate：2e-4
+- max_steps：120
+- per_device_train_batch_size：2
+- gradient_accumulation_steps：4
+- max_seq_length：2048
+- load_in_4bit：True
+
+## 为什么这么设
+
+### r / alpha
+
+r 是 LoRA 低秩维度：对权重更新 ΔW≈BA，r 越大表达容量越高，也更易过拟合、更吃显存。lora_alpha 是缩放系数，常见实现里有效更新大致按 alpha/r 缩放，所以 alpha 常取与 r 同量级或 2r。我的 v1 用 r=16、alpha=16，属于入门稳妥点；v2 数据虽扩到 500+，但任务仍是入门问答，先保持 16/16，避免「数据刚变好又同时猛提 r」导致无法归因。若 Holdout 仍欠拟合，再试 r=32 并同步审视 alpha。
+
+### lr / steps / batch
+
+learning_rate 控制更新步长：过大 loss 震荡/不收敛，过小同样步数学不动；Unsloth QLoRA 入门常见 2e-4。max_steps 是优化次数：v1=60 只为跑通；数据已到 500+ 后提到 120，让模型多看几遍多样本，但仍避免小数据式「数百步死背」。per_device_batch × gradient_accumulation ≈ 有效 batch（单卡）。T4 上 batch=2、accum=4 → 有效 batch≈8，在显存可承受下让梯度更稳。若 OOM：先降 batch 到 1，再把 accum 提到 8，尽量维持有效 batch。
+
+### seq / 4bit
+
+max_seq_length=2048：覆盖中等长度中文问答足够；再大（如 4096）显存与注意力开销明显上升，而我的样本多数远短于 2k，盲目加长收益有限。OOM 时可降到 1024。load_in_4bit=True：QLoRA 的关键前提，把 8B 基座塞进约 16GB 显存；关闭后常直接装不下或无法训练。量化解决「装下基座」，LoRA 解决「训哪些参数」，二者一起才适合 Kaggle T4。
+
+## 相对 v1 的改动计划
+
+相对 v1（约 9 条数据、steps≈60、r=16、4bit、产物题弱）：
+1) 数据：改用 sample_alpaca_zh_v2.jsonl（500+）+ Holdout 100 条隔离评测；
+2) steps：60→120；
+3) r/alpha：保持 16/16；lr 保持 2e-4；
+4) batch/accum：2×4；seq：2048；4bit：开；
+5) 保存为 llama_lora_zh_v2，不覆盖 v1；
+6) 用同一弱题/Holdout 对比完整性与是否仍术语堆砌；
+7) 若仍 OOM：seq→1024 或 batch→1、accum→8；若仍欠拟合且数据已足：再试 r=32。
+
+## 面试口述
+
+v1 用 QLoRA 在 T4 跑通，但数据太少、产物题只能蹦术语。v2 我先做数据工程到 500+ 并建 100 条 Holdout，再改超参：steps 60→120，r/alpha 仍 16 以便归因，保持 4bit 与有效 batch≈8。选择依据是「容量-过拟合-显存」权衡：先让监督信号变完整，再适度加步数，而不是盲目加大 r。最终用固定 Holdout 对比 v1/v2，证明是否真变好。
+
+- 其他：以下为学习模板，结合你的 v1 实验；读懂后可改措辞再校验。Notebook 里改参时与本页数字保持一致。
+
+## 校验
+
+- 通过：是
+- 保存：2026-07-29T11:12:36.596369+00:00
+- 校验：2026-07-29T11:12:36.596369+00:00

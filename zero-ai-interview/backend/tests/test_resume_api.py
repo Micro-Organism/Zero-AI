@@ -52,3 +52,29 @@ def test_resume_update_rejects_stale_version(auth_client):
         json={"title": "冲突版本", "version": resume["version"]},
     )
     assert stale.status_code == 409
+
+
+def test_reference_resumes_can_be_filtered_and_soft_deleted(auth_client):
+    master = auth_client.post(
+        "/api/v1/resumes",
+        json={"title": "我的主简历", "kind": "master"},
+    )
+    reference = auth_client.post(
+        "/api/v1/resumes",
+        json={"title": "参考候选人简历", "kind": "reference"},
+    )
+    assert master.status_code == 201
+    assert reference.status_code == 201
+
+    references = auth_client.get("/api/v1/resumes?kind=reference")
+    assert references.status_code == 200
+    assert references.json()["total"] == 1
+    assert references.json()["items"][0]["title"] == "参考候选人简历"
+
+    deleted = auth_client.delete(f"/api/v1/resumes/{reference.json()['id']}")
+    assert deleted.status_code == 204
+
+    references_after_delete = auth_client.get("/api/v1/resumes?kind=reference")
+    masters_after_delete = auth_client.get("/api/v1/resumes?kind=master")
+    assert references_after_delete.json()["total"] == 0
+    assert masters_after_delete.json()["total"] == 1

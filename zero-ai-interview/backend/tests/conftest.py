@@ -8,10 +8,11 @@ os.environ.setdefault("INITIAL_PASSWORD", "change-me")
 import pytest
 from fastapi.testclient import TestClient
 
-from career_workspace.core.database import Base, engine, session_factory
-from career_workspace.main import app
-from career_workspace.models.entities import User
+from career_workspace.core.database import engine, session_factory
 from career_workspace.core.security import hash_password
+from career_workspace.main import app
+from career_workspace.models.base import Base
+from career_workspace.models.entities import User
 
 
 @pytest.fixture(autouse=True)

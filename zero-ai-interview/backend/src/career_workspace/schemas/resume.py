@@ -67,6 +67,22 @@ class ResumeVersionCreate(BaseModel):
     note: str = ""
 
 
+class ReferenceAnalyzeInput(BaseModel):
+    source_text: str = Field(min_length=1, max_length=200_000)
+    title: str = ""
+    summary: str = ""
+
+
+class ReferenceSkillInput(BaseModel):
+    name: str = Field(min_length=1, max_length=120)
+    category: str = "参考简历"
+    evidence: str = ""
+
+
+class SkillImportInput(BaseModel):
+    skills: list[ReferenceSkillInput] = Field(min_length=1, max_length=100)
+
+
 class EntityResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

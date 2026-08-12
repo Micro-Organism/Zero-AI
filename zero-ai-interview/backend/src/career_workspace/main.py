@@ -6,9 +6,10 @@ from sqlalchemy import select
 
 from career_workspace.api.router import api_router
 from career_workspace.core.config import settings
-from career_workspace.core.database import Base, engine, session_factory
+from career_workspace.core.database import engine, session_factory
 from career_workspace.core.errors import AppError, app_error_handler
 from career_workspace.core.security import hash_password
+from career_workspace.models.base import Base
 from career_workspace.models.entities import User
 
 
